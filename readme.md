@@ -1,73 +1,26 @@
-# Struttura della tabella
+## 1. Seleziona gli utenti che hanno postato almeno un video (869)
 
-## Schema
+--- sql
+SELECT `users`.`id`, `users`.`username`, `posts`.`title` AS `posts_title`, `medias`.`type`, `posts`.`date` AS `posts_date`
+FROM `users`
+JOIN `posts` ON `posts`.`user_id` = `users`.`id`
+JOIN `medias` ON `medias`.`user_id` = `users`.`id`
+WHERE `medias`.`type` = 'video';
 
-User
-Post
-Media
-Like
+## 2. Seleziona tutti i post senza Like (13)
 
-Bonus: Tags e Comenti
+## 3. Conta il numero di like per ogni post (165) >>> (175)
 
-## User
+--- sql
+SELECT COUNT(`user_id`) AS `num_likes`, `post_id`
+FROM `likes`
+GROUP BY `post_id`;
 
-Id | BIGINT | PRIMARY_KEY | AUTO_INCREMENT | UNIQUE | NOTNULL (Tutti id di tutte le tabelle avranno questo formato)
-User_Name | VARCHAR(15) | NOTNULL | UNIQUE
-Name | VARCHAR(20) | NULL
-Lastname | VARCHAR(20) | NULL
-Pasword | VARCHAR(10) | NOTNULL | UNIQUE
-Phone | TINYINT | NULL | UNIQUE
-Email | VARCHAR(255) | NOTNULL | UNIQUE
-Date_of_birth | DATE | NOTNULL
-Created_Date | DATETIME | NOTNULL
+## 4. Ordina gli utenti per il numero di media caricati (25)
 
-## Post
+--- sql
+SELECT COUNT(`id`) AS `num_media`, `user_id`
+FROM `medias`
+GROUP BY `user_id`; MANCA ORDINARE, ASC DESC
 
-Id
-User_id | NOTNULL
-Media_id | NOTNULL
-Tag_id | NULL
-Title | VARCHAR(80) | NOTNULL
-Description | VARCHAR(255) | NULL
-Create_date | DATETIME | NOTNULL
-Modified_date | DATETIME | NULL
-
-## Media
-
-Id
-Post_id | NOTNULL
-User_id | NOTNULL
-Format(Photo, video) | VARCHAR(5) | NOTNULL
-path(link) | VARCHAR(255) | NOTNULL
-
-## Like
-
-Id
-User_id
-Post_id
-
-## Tags
-
-Id
-Name_Tag | VARCHAR(15) | NULL | UNIQUE
-Post_id | NOTNULL
-
-## Coments
-
-Id
-Post_Id
-User_Id
-Created_date | DATETIME | NOTNULL
-Modified_date | DATETIME | NULL
-
-## Media_Post (Tabella Ponte)
-
-Id
-Post_id | NOTNULL
-Media_id | NOTNULL
-
-## Post_Tags (Tabella Ponte)
-
-Id
-Post_id | NOTNULL
-Tags_id | NOTNULL
+## 5. Ordina gli utenti per totale di likes ricevuti nei loro posts (25)
