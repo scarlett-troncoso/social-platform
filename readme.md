@@ -37,4 +37,4 @@ SELECT `posts`.`user_id`, COUNT(`likes`.`user_id`) AS `num_likes`
 FROM `posts`
 JOIN `likes` ON `likes`.`post_id` = `posts`.`id`
 GROUP BY `posts`.`user_id`
-ORDER BY `posts`.`user_id` DESC;
+ORDER BY `num_likes` DESC;
