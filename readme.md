@@ -14,12 +14,13 @@ SELECT `id` AS `id_post_no_likes`
 FROM `posts`
 WHERE NOT EXISTS (SELECT `post_id` FROM `likes` WHERE `likes`.`post_id` = `posts`.`id`);
 
-## 3. Conta il numero di like per ogni post (165) >>> (175)
+## 3. Conta il numero di like per ogni post (165) >>> (152)
 
 --- sql
-SELECT COUNT(`user_id`) AS `num_likes`, `post_id`
+SELECT COUNT(`likes`.`user_id`) AS `num_likes`, `likes`.`post_id`, `posts`.`id`
 FROM `likes`
-GROUP BY `post_id`;
+JOIN `posts` ON `likes`.`post_id` = `posts`.`id`
+GROUP BY `posts`.`id`;
 
 ## 4. Ordina gli utenti per il numero di media caricati (25)
 
