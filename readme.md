@@ -9,6 +9,11 @@ WHERE `medias`.`type` = 'video';
 
 ## 2. Seleziona tutti i post senza Like (13)
 
+--- sql
+SELECT `id` AS `id_post_no_likes`
+FROM `posts`
+WHERE NOT EXISTS (SELECT `post_id` FROM `likes` WHERE `likes`.`post_id` = `posts`.`id`);
+
 ## 3. Conta il numero di like per ogni post (165) >>> (175)
 
 --- sql
@@ -21,6 +26,14 @@ GROUP BY `post_id`;
 --- sql
 SELECT COUNT(`id`) AS `num_media`, `user_id`
 FROM `medias`
-GROUP BY `user_id`; MANCA ORDINARE, ASC DESC
+GROUP BY `user_id`
+ORDER BY `num_media` DESC;
 
 ## 5. Ordina gli utenti per totale di likes ricevuti nei loro posts (25)
+
+--- sql
+SELECT `posts`.`user_id`, COUNT(`likes`.`user_id`) AS `num_likes`
+FROM `posts`
+JOIN `likes` ON `likes`.`post_id` = `posts`.`id`
+GROUP BY `posts`.`user_id`
+ORDER BY `posts`.`user_id` DESC;
