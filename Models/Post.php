@@ -12,10 +12,10 @@ all'interno della classe sono dichiarate delle variabili d'istanza
 class Post {
 
 
-    public static string $updated_at = NULL;
+    public static string $updated_at = 'NULL';
 
 
-    public function __construct(public int $id, public int $user_id, public string $date, public string $title, public array $tags, public string $created_at, public Media $medias)
+    public function __construct(public int $id, public int $user_id, public string $title, public string $date, public array $tags, public string $created_at, public Media $medias)
     {
         $this->id = $id;
         $this->user_id = $user_id;
@@ -30,7 +30,5 @@ class Post {
         return self::$updated_at;
     }
 }
-
-
 
 ?>
