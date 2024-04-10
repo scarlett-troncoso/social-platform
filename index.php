@@ -15,7 +15,6 @@ $result = $connection->query($sql);
 
 DB::close_connection_DB($connection);
 
-
 /* In un nuovo file, vengono istanziati almeno due oggetti Post e stampati a schermo i valori delle relative proprietà. */
 $posts = [
     new Post(1, 20, 'Giorno di Mare', '09-04-2024', ['Vacanze', 'Amici', 'Famiglia'], '06-04-2024', new Media('Photo', ['https://picsum.photos/id/16/200/200', 'https://picsum.photos/id/124/200/200'])),
@@ -24,19 +23,15 @@ $posts = [
 ];
 
 // var_dump($posts);
-/*
-$posts_dinamic = [
-new Post($row['id'], $row['user_id'], $row['title'], $row['date'], $row['tags'], $row['created_at'], new Media('https://picsum.photos/id/16/200/200')/*new Media($row['path']))
-];
 
-while ($row = $result -> fetch_assoc()) {
-    // var_dump($row); 
-    // var_dump($row['user_id']);
+/*$id, $user_id, $title, $date, $tags, $created_at,
+while ($res = $result -> fetch_assoc()) {
+   // var_dump($res); 
     
     // ['id' => $user_id, 'num_likes' => $num_likes ] = $row; // destructuring
 
-   // var_dump($user_id, $num_likes); // cosi mi fa vedere solo i campi ' ' e ' ' della prima riga della tabella departments
-
+   // var_dump($user_id, $num_likes); // cosi mi fa vedere solo i campi ' ' e ' ' della prima riga della tabella
+   ['id' => $id, 'user_id' => $user_id, 'title' => $title, 'date' => $date, 'tags' => $tags, 'created_at' => $created_at] = $res;
     die;
 }*/
 ?>

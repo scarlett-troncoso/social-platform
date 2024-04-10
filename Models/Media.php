@@ -23,10 +23,12 @@ class Media {
     }
 
    
-    public function getInfoMedia(){
-        foreach ($this->path  as $pt) {
-            return $this->type . ' ' . 'link: ' . $pt;
+    public function getInfoMedia(){ // trovare il modo che pt, faccia solo una volta
+        $info = '';
+        foreach ($this->path as $pt) {
+           $info = $info .  $this->type . ' ' . 'link: ' . $pt ;
         }
+        return $info;
     }
 }
 ?>
