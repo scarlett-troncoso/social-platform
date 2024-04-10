@@ -18,11 +18,27 @@ DB::close_connection_DB($connection);
 
 /* In un nuovo file, vengono istanziati almeno due oggetti Post e stampati a schermo i valori delle relative proprietà. */
 $posts = [
-    new Post(1, 20, 'Giorno di Mare', '09-04-2024', ['Vacanze', 'Amici', 'Famiglia'], '06-04-2024', new Media('https://picsum.photos/id/16/200/200')),
-    new Post(2, 35, 'Nuovo lavoro', '03-04-2024', ['Lavoro', 'Smartworking'], '01-04-2024', new Media('https://picsum.photos/id/9/200/200'))
+    new Post(1, 20, 'Giorno di Mare', '09-04-2024', ['Vacanze', 'Amici', 'Famiglia'], '06-04-2024', new Media('Photo', ['https://picsum.photos/id/16/200/200', 'https://picsum.photos/id/124/200/200'])),
+    new Post(2, 35, 'Nuovo lavoro', '03-04-2024', ['Lavoro', 'Smartworking'], '01-04-2024', new Media('Photo', ['https://picsum.photos/id/9/200/200'])),
+    new Post(3, 48, 'Oggi preparo la pasta', '08-04-2024', ['Cuina', 'Cucina Italiana'], '04-04-2024', new Media('Video', ['https://cdn.pixabay.com/video/2024/02/11/200157-912127896_large.mp4']))
 ];
 
 // var_dump($posts);
+/*
+$posts_dinamic = [
+new Post($row['id'], $row['user_id'], $row['title'], $row['date'], $row['tags'], $row['created_at'], new Media('https://picsum.photos/id/16/200/200')/*new Media($row['path']))
+];
+
+while ($row = $result -> fetch_assoc()) {
+    // var_dump($row); 
+    // var_dump($row['user_id']);
+    
+    // ['id' => $user_id, 'num_likes' => $num_likes ] = $row; // destructuring
+
+   // var_dump($user_id, $num_likes); // cosi mi fa vedere solo i campi ' ' e ' ' della prima riga della tabella departments
+
+    die;
+}*/
 ?>
 
 <!DOCTYPE html>
@@ -41,25 +57,35 @@ $posts = [
         <main>
             <div class="container py-4 w-75">  
             <h2 class="w-75">Stampa 2 istanze Post</h2>
-                <div class="d-flex">
-                    <?php foreach($posts as $post) : ?>
-                        <div class="col-5">
-                            <div class="card p-2 m-3">                    
-                                <h4><?= $post->title ?></h4>
-                                <span><?= $post->date ?></span>
-                                <?php foreach($post->medias as $mediaPath) : ?>
-                                    <img class="w-100" src=<?= $mediaPath ?> ></img> 
-                                <?php endforeach; ?>
+                <?php foreach($posts as $post) : ?>
+                    <div class="">
+                        <div class="card p-2 m-3 w-auto">                    
+                            <h4><?= $post->title ?></h4>
+                            <span><?= $post->date ?></span>
+                            <span><?= $post->medias->type ?></span>
+                            <div class="d-flex">
                                 
-                                <div>TAGS: 
-                                    <?php foreach($post->tags as $tag) : ?>           
-                                        <span><?= '  ' . $tag . ' | '?></span>    
-                                    <?php endforeach; ?>   
-                                </div>
+                                <?php foreach($post->medias->path as $mediaPath) : ?>
+
+                                    <?php if ($post->medias->type === 'Photo') : ?>
+                                        <img class="px-2" src=<?= $mediaPath ?> alt="<?= $post->medias->getInfoMedia() ?>"></img> 
+
+                                    <?php elseif ($post->medias->type === 'Video') : ?>
+                                        <video class="px-2 w-25" src="<?= $mediaPath ?>" alt="<?= $post->medias->getInfoMedia() ?>" ></video> <!--if, se type = photo allora img, se type= video allora video-->                                  
+                                    <?php endif;?>
+
+                                <?php endforeach; ?>
                             </div>
-                        </div> 
-                    <?php endforeach; ?>        
-                </div>            
+                            
+                            <div>TAGS: 
+                                <?php foreach($post->getTags() as $tag) : ?>
+                                    <span> <?= '  ' . $tag . ' | '?> </span>
+                                <?php endforeach; ?>
+                            </div>
+                            
+                        </div>
+                    </div> 
+                <?php endforeach; ?>                  
             </div>
 
             
