@@ -7,8 +7,6 @@ all'interno della classe sono dichiarate delle variabili d'istanza
 ● BONUS: il costruttore accetta più Media
 */
 
-
-
 class Post {
 
 
@@ -23,7 +21,13 @@ class Post {
         $this->date = $date;
         $this->tags = $tags;
         $this->created_at = $created_at;
+        $this->medias = $medias;
+
         //$this->updated_at = $updated_at;
+    }
+
+    public function getTags(){ // questa funzione legge un valore
+        return $this->tags;
     }
 
     public static function getStaticupdated_at(){ //metodo statico che chiamo staticamente
@@ -31,4 +35,14 @@ class Post {
     }
 }
 
+/* **** due opzioni per stampare tags in pagina: *****
+**** 1
+<?php foreach($post->tags as $tag) : ?>           
+    <span><?= '  ' . $tag . ' | '?></span>    
+<?php endforeach; ?>
+
+***** 2
+<?php foreach($movie->getCast() as $nameCast) : ?>
+    <li> <?= $nameCast; ?> </li>
+<?php endforeach; ?>*/
 ?>
