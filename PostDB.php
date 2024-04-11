@@ -3,30 +3,31 @@ require_once __DIR__ . '/Models/Post.php';
 require_once __DIR__ . '/Models/Media.php';
 require_once __DIR__ . '/database/DB.php';
 
+/* BONUS: utilizza i dati estratti in precedenza dal DB per istanziare i nuovi oggetti*/
 
+/* Connection db */
 $connection = DB::connection_DB();
 
 $sql = "SELECT * FROM `users`
         JOIN `posts` ON `posts`.`user_id` = `users`.`id`
         JOIN `medias` ON `medias`.`user_id` = `users`.`id`;"; 
-$result = $connection->query($sql);
+$result_db = $connection->query($sql);
 DB::close_connection_DB($connection);
 
-$res = $result -> fetch_assoc();
-$posts = [
+/* While fino a 10 posts */
+$counter = 0;
+$max = 10;
+while (($res = $result_db -> fetch_assoc()) and ($counter < $max) ) {
+    $counter++;
+    $posts_db = [
     new Post($res['id'], $res['user_id'], $res['title'], $res['date'], $res['tags'], $res['created_at'], new Media($res['type'], $res['path'])),
-];
-
-var_dump($posts);
-
-/*
-while ($res = $result -> fetch_assoc()) {
-   // var_dump($res); 
+        ];  
+    // var_dump($res);
+    var_dump($posts_db); // 10 risultati
     
-    // ['id' => $id, 'user_id' => $user_id, 'title' => $title, 'date' => $date, 'tags' => $tags, 'created_at' => $created_at] = $res; // destructuring
-
-    die;
-}*/
+} 
+// il while non funziona con i dati a partire da 'user_id' fino a 'created_at' ripete 10 volte gli stessi dati
+// se non ce nessun JOIN allora funziona bene 
 
 
 ?>

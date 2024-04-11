@@ -14,26 +14,36 @@ ORDER BY `num_likes` DESC;"; // # 4. Ordina gli utenti per il numero di media ca
 $result = $connection->query($sql); 
 
 DB::close_connection_DB($connection);
-
+/*
 /* In un nuovo file, vengono istanziati almeno due oggetti Post e stampati a schermo i valori delle relative proprietà. */
 $posts = [
-    new Post(1, 20, 'Giorno di Mare', '09-04-2024', ['Vacanze', 'Amici', 'Famiglia'], '06-04-2024', new Media('Photo', ['https://picsum.photos/id/16/200/200', 'https://picsum.photos/id/124/200/200'])),
-    new Post(2, 35, 'Nuovo lavoro', '03-04-2024', ['Lavoro', 'Smartworking'], '01-04-2024', new Media('Photo', ['https://picsum.photos/id/9/200/200'])),
-    new Post(3, 48, 'Oggi preparo la pasta', '08-04-2024', ['Cuina', 'Cucina Italiana'], '04-04-2024', new Media('Video', ['https://cdn.pixabay.com/video/2024/02/11/200157-912127896_large.mp4']))
+    new Post(1, 20, 'Giorno di Mare', '09-04-2024', ['Vacanze', 'Amici', 'Famiglia'], '06-04-2024', new Media('Photo', 'https://picsum.photos/id/16/200/200')),
+    new Post(2, 35, 'Nuovo lavoro', '03-04-2024', ['Lavoro', 'Smartworking'], '01-04-2024', new Media('Photo', 'https://picsum.photos/id/9/200/200')),
+    new Post(3, 48, 'Oggi preparo la pasta', '08-04-2024', ['Cuina', 'Cucina Italiana'], '04-04-2024', new Media('Video', 'https://cdn.pixabay.com/video/2024/02/11/200157-912127896_large.mp4'))
 ];
 
-// var_dump($posts);
+/* BONUS: utilizza i dati estratti in precedenza dal DB per istanziare i nuovi oggetti*/
 
-/*$id, $user_id, $title, $date, $tags, $created_at,
-while ($res = $result -> fetch_assoc()) {
-   // var_dump($res); 
+$connection = DB::connection_DB();
+
+$sql = "SELECT * FROM `posts`
+        /*JOIN `medias` ON `medias`.`user_id` = `posts`.`user_id`*/;"; //quando metto il join de medias non funziona piu il while
+$result_db = $connection->query($sql);
+DB::close_connection_DB($connection);
+
+/* While fino a 10 posts */
+$counter = 0;
+$max = 5;
+while (($res = $result_db -> fetch_assoc()) and ($counter < $max) ) {
+    $counter++;
+    $posts_db = [
+    new Post($res['id'], $res['user_id'], $res['title'], $res['date'], $res['tags'], $res['created_at'], new Media('Photo', 'https://picsum.photos/id/16/200/200')/*$res['type'], $res['path']*/) //quando metto il join de medias non funziona piu il while
+        ];  
+    // var_dump($res);
+    var_dump($posts_db); // 10 risultati
     
-    // ['id' => $user_id, 'num_likes' => $num_likes ] = $row; // destructuring
+} 
 
-   // var_dump($user_id, $num_likes); // cosi mi fa vedere solo i campi ' ' e ' ' della prima riga della tabella
-   ['id' => $id, 'user_id' => $user_id, 'title' => $title, 'date' => $date, 'tags' => $tags, 'created_at' => $created_at] = $res;
-    die;
-}*/
 ?>
 
 <!DOCTYPE html>
@@ -58,18 +68,14 @@ while ($res = $result -> fetch_assoc()) {
                             <h4><?= $post->title ?></h4>
                             <span><?= $post->date ?></span>
                             <span><?= $post->medias->type ?></span>
+
                             <div class="d-flex">
-                                
-                                <?php foreach($post->medias->path as $mediaPath) : ?>
-
                                     <?php if ($post->medias->type === 'Photo') : ?>
-                                        <img class="px-2" src=<?= $mediaPath ?> alt="<?= $post->medias->getInfoMedia() ?>"></img> 
+                                        <img class="px-2" src=<?= $post->medias->path ?> alt="<?= $post->medias->getInfoMedia() ?>"></img> 
 
-                                    <?php elseif ($post->medias->type === 'Video') : ?>
-                                        <video class="px-2 w-25" src="<?= $mediaPath ?>" alt="<?= $post->medias->getInfoMedia() ?>" ></video> <!--if, se type = photo allora img, se type= video allora video-->                                  
+                                        <?php elseif ($post->medias->type === 'Video') : ?>
+                                            <video class="px-2 w-25" src="<?= $post->medias->path ?>" alt="<?= $post->medias->getInfoMedia() ?>" ></video> <!--if, se type = photo allora img, se type= video allora video-->                                  
                                     <?php endif;?>
-
-                                <?php endforeach; ?>
                             </div>
                             
                             <div>TAGS: 
@@ -80,7 +86,7 @@ while ($res = $result -> fetch_assoc()) {
                             
                         </div>
                     </div> 
-                <?php endforeach; ?>                  
+                <?php endforeach; ?>               
             </div>
 
             
@@ -95,7 +101,7 @@ while ($res = $result -> fetch_assoc()) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while ($row = $result->fetch_assoc()) :
+                        <?php while ($row = $result->fetch_assoc() ) :
                         ['user_id' => $user_id, 'num_likes' => $num_likes ] = $row; ?> 
                             <tr>
                                 <th scope="row"><?= $user_id ?></th>

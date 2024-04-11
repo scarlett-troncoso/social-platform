@@ -13,7 +13,7 @@ class Post {
     public static string $updated_at = 'NULL';
 
 
-    public function __construct(public int $id, public int $user_id, public string $title, public string $date, public array $tags, public string $created_at, public Media $medias)
+    public function __construct(public int $id, public int $user_id, public string $title, public string $date, public $tags, public string $created_at, public Media $medias) // $tags non dichiarato array perche con i dati del DB non riconosce come array ma come stringa
     {
         $this->id = $id;
         $this->user_id = $user_id;
