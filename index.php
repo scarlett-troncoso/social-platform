@@ -26,23 +26,28 @@ $posts = [
 
 $connection = DB::connection_DB();
 
-$sql = "SELECT * FROM `posts`
-        /*JOIN `medias` ON `medias`.`user_id` = `posts`.`user_id`*/;"; //quando metto il join de medias non funziona piu il while
+$sql = "SELECT `media_post`.`post_id` AS `id_post`, `medias`.`id` AS `id_media`, `posts`.`title`, `posts`.`date`, `posts`.`tags`, `posts`.`created_at`, `medias`.`type` AS `type_media`, `medias`.`path` AS `path_media`
+FROM `medias`
+JOIN `media_post` ON `media_post`.`media_id` = `medias`.`id`
+JOIN `posts` ON `posts`.`id` = `media_post`.`post_id`;"; //quando metto il join de medias non funziona piu il while
 $result_db = $connection->query($sql);
 DB::close_connection_DB($connection);
 
-/* While fino a 10 posts */
+/* While fino a 5 posts */
+
 $counter = 0;
 $max = 5;
 while (($res = $result_db -> fetch_assoc()) and ($counter < $max) ) {
     $counter++;
     $posts_db = [
-    new Post($res['id'], $res['user_id'], $res['title'], $res['date'], $res['tags'], $res['created_at'], new Media('Photo', 'https://picsum.photos/id/16/200/200')/*$res['type'], $res['path']*/) //quando metto il join de medias non funziona piu il while
-        ];  
-    // var_dump($res);
-    var_dump($posts_db); // 10 risultati
+    new Post($res['id_post'], $res['id_media'], $res['title'], $res['date'], $res['tags'], $res['created_at'], new Media($res['type_media'], $res['path_media'])) 
+    ];  
+    //Ci stanno tutti i post ripetute la quantitá di volte dei media che hanno, visto che ogni post ha tanti media
     
-} 
+    var_dump($posts_db); // 5 risultati
+}
+// abbiamo messo id_post al posto di id, e id_media al posto di user_id
+
 
 ?>
 
@@ -96,8 +101,8 @@ while (($res = $result_db -> fetch_assoc()) and ($counter < $max) ) {
                 <table class="table w-25">
                     <thead>
                         <tr>
-                        <th scope="col">User Id</th>
-                        <th scope="col">Likes</th>
+                            <th scope="col">User Id</th>
+                            <th scope="col">Likes</th>
                         </tr>
                     </thead>
                     <tbody>
