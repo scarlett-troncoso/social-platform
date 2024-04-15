@@ -26,7 +26,12 @@ class Post {
         //$this->updated_at = $updated_at;
     }
 
-    public function getTags(){ // questa funzione legge un valore
+    public function formatDate($dateDB){ // questa funzione legge un valore
+        $newDate = date("d-m-Y", strtotime($dateDB));
+        return $newDate;
+    }
+
+    public function getTags(){ // questa funzione legge il valore di tags
         return $this->tags;
     }
 
