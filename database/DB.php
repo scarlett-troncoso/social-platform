@@ -32,21 +32,8 @@ class DB {
 
 // var_dump($connection);
 // var_dump($DB);
-
-
 // var_dump($result); 
 // var_dump($result->fetch_assoc());
 
-/*
-while ($row = $result -> fetch_assoc()) {
-    // var_dump($row); 
-    // var_dump($row['user_id']);
-
-    ['user_id' => $user_id, 'num_likes' => $num_likes ] = $row; // destructuring
-
-    var_dump($user_id, $num_likes); // cosi mi fa vedere solo i campi ' ' e ' ' della prima riga della tabella departments
-
-    die;
-}*/
 ?>
 

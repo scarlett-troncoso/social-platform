@@ -5,22 +5,28 @@
 ● all'interno della classe è definito un costruttore
 ● all'interno della classe è definito almeno un metodo
 */
+
+/**
+ * ### Class Media
+ * describes the type and path of the media
+ */
 class Media {
     
+    /**
+        * @param String $type -- media type
+        * @param String $path -- media path
+        */
     public function __construct(public string $type, public string $path)
     {
         $this->type = $type;
         $this->path = $path; //URL
     }
-   /*
-    public function getInfoMedia(){ // trovare il modo che pt, faccia solo una volta
-        $info = '';
-        foreach ($this->path as $pt) {
-           $info = $info .  $this->type . ' ' . 'link: ' . $pt ;
-        }
-        return $info;
-    }*/
 
+    /**
+         * Organizes media content information in a single string
+         * 
+         * @return String $info, (type link: path)
+        */
     public function getInfoMedia(){ 
        
       $info = $this->type . ' ' . 'link: ' . $this->path ;

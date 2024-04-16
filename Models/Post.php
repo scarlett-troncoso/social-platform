@@ -6,13 +6,25 @@ all'interno della classe sono dichiarate delle variabili d'istanza
 ● tra i parametri del costruttore accetta un Media
 ● BONUS: il costruttore accetta più Media
 */
-
+/**
+ * ### Class Post
+ * describes the information of the posts
+ */
 class Post {
 
 
     public static string $updated_at = 'NULL';
 
-
+    /**
+         * 
+        * @param Int $id -- post id
+        * @param Int $user_id -- user id
+        * @param String $title -- post title
+        * @param String $date -- post date
+        * @param Array $tags -- post tags
+        * @param String $created_at -- post creation date
+        * @param Media $medias -- type and path of medias, of Class Media 
+        */
     public function __construct(public int $id, public int $user_id, public string $title, public string $date, public $tags, public string $created_at, public Media $medias) // $tags non dichiarato array perche con i dati del DB non riconosce come array ma come stringa
     {
         $this->id = $id;
@@ -26,28 +38,31 @@ class Post {
         //$this->updated_at = $updated_at;
     }
 
+    /**
+         * Change date from  "yyyy-mm-dd"  to  "dd-mm-yyyy"
+         * 
+         * @return String $newDate, date string in the new format
+        */
     public function formatDate($dateDB){ // questa funzione legge un valore
         $newDate = date("d-m-Y", strtotime($dateDB));
         return $newDate;
     }
 
-    public function getTags(){ // questa funzione legge il valore di tags
+    /**
+         * Reads the value of tags
+         * @return Array $tags
+        */
+    public function getTags(){
         return $this->tags;
     }
 
+    /**
+         * Reads the value of the static variable $updated_at
+         * @return NULL $updated_at
+        */
     public static function getStaticupdated_at(){ //metodo statico che chiamo staticamente
         return self::$updated_at;
     }
 }
 
-/* **** due opzioni per stampare tags in pagina: *****
-**** 1
-<?php foreach($post->tags as $tag) : ?>           
-    <span><?= '  ' . $tag . ' | '?></span>    
-<?php endforeach; ?>
-
-***** 2
-<?php foreach($movie->getCast() as $nameCast) : ?>
-    <li> <?= $nameCast; ?> </li>
-<?php endforeach; ?>*/
 ?>
