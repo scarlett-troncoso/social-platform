@@ -17,23 +17,23 @@ $result_db = $connection->query($sql);
 
 DB::close_connection_DB($connection);
 
+
 /* While fino a 5 posts */
 
+$posts_db = [];
+ 
 $counter = 0;
 $max = 5;
+
 while (($res = $result_db -> fetch_assoc()) and ($counter < $max) ) {
     $counter++;
-    $posts_db = [
-    new Post($res['id_post'], $res['id_media'], $res['title'], $res['date'], $res['tags'], $res['created_at'], new Media($res['type_media'], $res['path_media'])) 
-    ];  
+    array_push($posts_db, new Post($res['id_post'], $res['id_media'], $res['title'], $res['date'], $res['tags'], $res['created_at'], new Media($res['type_media'], $res['path_media'])) );
+     
     //Ogni post si ripete la quantitá di volte dei media che ha, visto che ogni post ha piu di un media
-   
-    // var_dump($posts_db); // 5 risultati
 }
 // abbiamo messo id_post al posto di id, e id_media al posto di user_id
 
-//var_dump($posts_db);
-//var_dump($result_db -> fetch_assoc());
+// var_dump($posts_db); // 5 risultati
 
 
 
