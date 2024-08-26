@@ -34,12 +34,10 @@ class Post {
         $this->tags = $tags;
         $this->created_at = $created_at;
         $this->medias = $medias;
-
-        //$this->updated_at = $updated_at;
     }
 
     /**
-         * Change date from  "yyyy-mm-dd"  to  "dd-mm-yyyy"
+         * Cambia data da "yyyy-mm-dd"  a  "dd-mm-yyyy"
          * 
          * @return String $newDate, date string in the new format
         */
@@ -49,7 +47,7 @@ class Post {
     }
 
     /**
-         * Reads the value of tags
+         * Legge il valore di tags
          * @return Array $tags
         */
     public function getTags(){
@@ -57,7 +55,7 @@ class Post {
     }
 
     /**
-         * Reads the value of the static variable $updated_at
+         * Legge il valore della variabile statica $updated_at
          * @return NULL $updated_at
         */
     public static function getStaticupdated_at(){ //metodo statico che chiamo staticamente
