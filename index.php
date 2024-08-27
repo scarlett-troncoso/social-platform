@@ -18,15 +18,15 @@ DB::close_connection_DB($connection);
 
 /* Step 4: In un nuovo file, vengono istanziati almeno due oggetti Post e stampati a schermo i valori delle relative proprietà. */
 $posts = [
-    new Post(1, 20, 'Giorno di Mare', '2024-04-09', ['Vacanze', 'Amici', 'Famiglia'], '2024-04-06', new Media('Photo', 'https://picsum.photos/id/16/200/200')),
-    new Post(2, 35, 'Nuovo lavoro', '2024-04-03', ['Lavoro', 'Smartworking'], '2024-04-01', new Media('Photo', 'https://picsum.photos/id/9/200/200')),
-    new Post(3, 48, 'Video progetto', '2024-04-08', ['Videomaker', 'Publicita'], '2024-04-04', new Media('Video', 'https://videos.pexels.com/video-files/8376511/8376511-uhd_2160_2160_25fps.mp4')),
-    new PostExtend(4, 50, 'Trekking in montagna', '2024-04-08', ['Trekking', 'Sport', 'Natura'], '2024-04-04', new Media('Photo', 'https://picsum.photos/id/910/200/200')), // istanziata con class PostExtend del file Inheritance.php folder: Models
+    new Post(1, 20, 'Giorno di Mare', '2024-04-09', ['Vacanze', 'Amici', 'Famiglia'], '2024-04-06', new Media(['Photo'], ['https://picsum.photos/id/16/200/200'])),
+    new Post(2, 35, 'Nuovo lavoro', '2024-04-03', ['Lavoro', 'Smartworking'], '2024-04-01', new Media(['Photo'], ['https://picsum.photos/id/9/200/200'])),
+    new Post(3, 48, 'Video progetto', '2024-04-08', ['Videomaker', 'Publicita'], '2024-04-04', new Media(['Video'], ['https://videos.pexels.com/video-files/8376511/8376511-uhd_2160_2160_25fps.mp4'])),
+    new PostExtend(4, 50, 'Trekking in montagna', '2024-04-08', ['Trekking', 'Sport', 'Natura'], '2024-04-04', new Media(['Photo'], ['https://picsum.photos/id/910/200/200'])), // istanziata con class PostExtend del file Inheritance.php folder: Models
 ];
 
 // istanziata con class MediaExtend del file Inheritance.php folder: Models
 $media_extends = [
-    new MediaExtend(5, 81, 'Passeggiata in cittá', '2024-04-08', ['Turismo', 'Viaggio'], '2024-04-04', 'Photo', 'https://picsum.photos/id/629/200/200')
+    new MediaExtend(5, 81, 'Passeggiata in cittá', '2024-04-08', ['Turismo', 'Viaggio'], '2024-04-04', ['Photo'], ['https://picsum.photos/id/629/200/200'])
 ];
 
 
@@ -52,6 +52,7 @@ include __DIR__ . '/Models/PostDB.php';
         <main style="background-color: darkslategrey">
                       
             <?php include __DIR__ . '/Partials/stampPost.php'; ?>
+            <?php include __DIR__ . '/Partials/stampPostDB.php'; ?>
           
             <?php include __DIR__ . '/Partials/stampQuery.php'; ?>
             
