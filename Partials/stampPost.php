@@ -10,18 +10,23 @@
                     <span><?= $post->formatDate($post->date)?></span> <!-- method della class Posts "formatDate($date)"-->
 
                     <div class="w-100">
-                        <?php if ($post->medias->type === 'Photo') : ?> <!-- condizionale, se il tipo di media é una imagine usare il tag "<img>", -->
-                            <img class="w-100 shadow-sm" 
-                                src=<?= $post->medias->path ?> 
-                                alt="<?= $post->medias->getInfoMedia() ?>"> <!-- method della class Media "getInfoMedia()"-->
-                            </img> 
+                        <?php foreach($post->medias->type as $index => $type) : ?> <!-- Itera su ogni tipo di media -->
+                            <?php $path = $post->medias->path[$index]; ?> <!-- Ottieni il percorso corrispondente al tipo -->
+                            
+                            <?php if ($type === 'Photo') : ?> <!-- Se il tipo di media è una immagine, usa il tag "<img>" -->
+                                <img class="w-100 shadow-sm" 
+                                    src="<?= $path ?>" 
+                                    alt="<?= $post->medias->getInfoMedia() ?>"> <!-- method della class Media "getInfoMedia()" -->
+                                </img>
 
-                            <?php elseif ($post->medias->type === 'Video') : ?> <!-- condizionale, altrimente se é un video usare il tag "<video>"-->
+                            <?php elseif ($type === 'Video') : ?> <!-- Se è un video, usa il tag "<video>" -->
                                 <video class="w-100 shadow-sm" 
-                                    src="<?= $post->medias->path ?>" 
-                                    alt="<?= $post->medias->getInfoMedia() ?>"> <!-- method della class Media "getInfoMedia()"-->
-                                </video>                                 
-                        <?php endif;?>
+                                    src="<?= $path ?>" 
+                                    alt="<?= $post->medias->getInfoMedia() ?>" 
+                                    controls> <!-- method della class Media "getInfoMedia()" -->
+                                </video>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
                     </div>
                     
                     <div>Tags: 
@@ -41,19 +46,25 @@
                     <span><?= $post->formatDate($post->date)?></span> <!-- method della class MediaExtend "formatDate($date)"-->
 
                     <div class="w-100">
-                        <?php if ($post->type === 'Photo') : ?> 
-                            <img class="w-100 shadow-sm" 
-                                src=<?= $post->path ?> 
-                                alt="<?= $post->getInfoMedia() ?>"> <!-- method della class Media "getInfoMedia()"-->
-                            </img> 
+                        
+                        <?php foreach($post->type as $index => $type) : ?> <!-- Itera su ogni tipo di media -->
+                        
+                            <?php $path = $post->path[$index]; ?> <!-- Ottieni il percorso corrispondente al tipo -->
+                            
+                            <?php if ($type === 'Photo') : ?> <!-- Se il tipo di media è una immagine, usa il tag "<img>" -->
+                                <img class="w-100 shadow-sm" 
+                                    src="<?= $path ?>" 
+                                    alt="<?= $post->getInfoMedia() ?>"> <!-- method della class Media "getInfoMedia()" -->
+                                </img>
 
-                            <?php elseif ($post->type === 'Video') : ?> 
+                            <?php elseif ($type === 'Video') : ?> <!-- Se è un video, usa il tag "<video>" -->
                                 <video class="w-100 shadow-sm" 
-                                    src="<?= $post->path ?>" 
-                                    alt="<?= $post->getInfoMedia() ?>"> <!-- method della class Media "getInfoMedia()"-->
-                                </video>                                 
-                        <?php endif;?>
-                    </div>
+                                    src="<?= $path ?>" 
+                                    alt="<?= $post->getInfoMedia() ?>" 
+                                    controls> <!-- method della class Media "getInfoMedia()" -->
+                                </video>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
                     
                     <div>Tags: 
                         <?php foreach($post->tags as $tag) : ?> 
