@@ -1,9 +1,11 @@
-<div class="container py-4 w-75"> 
-    <h2 class="w-75" style="color: #96b5b6; text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);"> 
-        Stampa 5 Posts stanziati con dati del Database:
+ 
+<div class="py-5 mx-auto mt-3">
+    <hr class="border border-light">
+    <h2 class="py-5 w-75 mt-3" style="color: #96b5b6; text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);"> 
+        Stampa 3 Posts stanziati con dati del Database:
     </h2>
     <div  class="row d-flex ">
-    <?php foreach($posts_db as $post) : ?>
+        <?php foreach($posts_db as $post) : ?>
             <div  class="col-4" >
                 <div class="card p-2 my-3 shadow" style="background-color:#96b5b6; color: #172525;">                    
                     <h4><?= $post->title ?></h4>
@@ -33,10 +35,13 @@
                     </div>
                     
                     <div>Tags: 
-                        <?php foreach($post->getTags() as $tag) : ?> <!-- method della class Posts "getTags()" -->
-                            <span><?= '  ' . $tag . ' | ' ?></span>
+                    
+                    <?php $post->tags; // Stringa JSON
+                            $tags = json_decode($post->tags, true); // Converte la stringa JSON in un array ?>
+                        <?php foreach($tags as $tag) : ?> <!-- method della class Posts "getTags()"-->
+                            <span> <?= '  ' . $tag . ' | '?> </span>
                         <?php endforeach; ?>
-                    </div>                          
+                    </div>                         
                 </div>
             </div>                         
         <?php endforeach; ?>     

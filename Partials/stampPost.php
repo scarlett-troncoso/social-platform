@@ -1,6 +1,7 @@
-<div class="container py-4 w-75"> 
-    <h2 class="w-75" style="color: #96b5b6; text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);"> 
-        Stampa 2 istanze Post
+<div class="mx-auto">
+    <hr class="border border-light">
+    <h2 class="py-5 w-75 mt-3" style="color: #96b5b6; text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);"> 
+        Stampa 5 istanze Post
     </h2>
     <div  class="row d-flex ">
         <?php foreach($posts as $post) : ?>
@@ -67,6 +68,7 @@
                         <?php endforeach; ?>
                     
                     <div>Tags: 
+                        
                         <?php foreach($post->tags as $tag) : ?> 
                             <span> <?= '  ' . $tag . ' | '?> </span>
                         <?php endforeach; ?>

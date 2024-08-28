@@ -25,8 +25,9 @@ GROUP BY `posts`.`id`;
 ## 4. Ordina gli utenti per il numero di media caricati (25)
 
 --- sql
-SELECT COUNT(`id`) AS `num_media`, `user_id`
+SELECT COUNT(`medias`.`id`) AS `num_media`, `medias`.`user_id`, `users`.`username`
 FROM `medias`
+JOIN `users` ON `users`.`id` = `medias`.`user_id` //Per avere anche i nomi degli utenti
 GROUP BY `user_id`
 ORDER BY `num_media` DESC;
 

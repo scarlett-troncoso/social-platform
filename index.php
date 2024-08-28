@@ -7,11 +7,11 @@ require_once __DIR__ . '/Models/Inheritance.php';
 /* Step 3: Crea una pagina che in php si connetta al db con mysqli e stampi i dati in pagina di una query a scelta tra le precedenti.  */
 $connection = DB::connection_DB();
 
-$sql = "SELECT `posts`.`user_id`, COUNT(`likes`.`user_id`) AS `num_likes`
-        FROM `posts`
-        JOIN `likes` ON `likes`.`post_id` = `posts`.`id`
-        GROUP BY `posts`.`user_id`
-        ORDER BY `num_likes` DESC;"; // # 4. Ordina gli utenti per il numero di media caricati
+$sql = "SELECT COUNT(`medias`.`id`) AS `num_media`, `medias`.`user_id`, `users`.`username`
+        FROM `medias`
+        JOIN `users` ON `users`.`id` = `medias`.`user_id`
+        GROUP BY `user_id`
+        ORDER BY `num_media` DESC;"; // # 4. Ordina gli utenti per il numero di media caricati
 $result = $connection->query($sql); 
 
 DB::close_connection_DB($connection);
@@ -48,14 +48,20 @@ include __DIR__ . '/Models/PostDB.php';
                 crossorigin="anonymous"/>
     </head>
 
-    <body>
-        <main style="background-color: darkslategrey">
-                      
-            <?php include __DIR__ . '/Partials/stampPost.php'; ?>
-            <?php include __DIR__ . '/Partials/stampPostDB.php'; ?>
-          
-            <?php include __DIR__ . '/Partials/stampQuery.php'; ?>
+    <body style="background-color: darkslategrey">
+        <header class="pt-3 w-75 m-auto">
+            <h1 class="text-center" style="color: #96b5b6; text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);">Social Platform</h1>
+            <p class="text-center w-75 m-auto" style="color: #96b5b6; text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);">Progetto dimostrativo di programmazione OOP in PHP, che mostra l'utilizzo di classi, ereditarietà e la stampa a schermo di dati istanziati sia manualmente che tramite connessione a un database. Include l'integrazione di dati da un database e la loro visualizzazione dinamica su una pagina web.</p>
+        </header>
+        <main>
+            <div class="container py-4 w-75">      
+                <?php include __DIR__ . '/Partials/stampPost.php'; ?>
+                <?php include __DIR__ . '/Partials/stampPostDB.php'; ?>
             
+                <?php include __DIR__ . '/Partials/stampQuery.php'; ?>
+
+                <?php include __DIR__ . '/Models/Media.php'; ?>
+            </div>
         </main>
     </body>
 </html>
