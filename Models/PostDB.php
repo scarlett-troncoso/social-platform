@@ -9,12 +9,6 @@ require_once __DIR__ . '/Media.php';
 
 $connection = DB::connection_DB();
 
-/*$sql = "SELECT `media_post`.`post_id` AS `id_post`, `medias`.`id` AS `id_media`, `posts`.`title`, `posts`.`date`, `posts`.`tags`, `posts`.`created_at`, `medias`.`type` AS `type_media`, `medias`.`path` AS `path_media`
-        FROM `medias`
-        JOIN `media_post` ON `media_post`.`media_id` = `medias`.`id`
-        JOIN `posts` ON `posts`.`id` = `media_post`.`post_id`;";
-$result_db = $connection->query($sql);*/
-
 $sql = "SELECT 
             `posts`.`id` AS `id_post`, 
             `posts`.`title`, 
@@ -38,6 +32,26 @@ $result_db = $connection->query($sql);
 
 DB::close_connection_DB($connection);
 
+while ($res = $result_db->fetch_assoc()) {
+    $media_types = explode(',', $res['types_media']);
+    $media_paths = explode(',', $res['paths_media']);
+    
+    // Crea un nuovo Post e associa i media
+    $post = new Post($res['id_post'], $res['id_post'], $res['title'], $res['date'], $res['tags'], $res['created_at'], new Media(/*$type*/$media_types, $media_paths)/*$media_objects*/);
+
+    // Aggiungi il post alla lista dei post
+    $posts_db[] = $post;
+    //var_dump($post);
+}
+
+
+
+
+/*$sql = "SELECT `media_post`.`post_id` AS `id_post`, `medias`.`id` AS `id_media`, `posts`.`title`, `posts`.`date`, `posts`.`tags`, `posts`.`created_at`, `medias`.`type` AS `type_media`, `medias`.`path` AS `path_media`
+        FROM `medias`
+        JOIN `media_post` ON `media_post`.`media_id` = `medias`.`id`
+        JOIN `posts` ON `posts`.`id` = `media_post`.`post_id`;";
+$result_db = $connection->query($sql);*/
 
 
 /* While fino a 6 posts */
@@ -54,15 +68,4 @@ while (($res = $result_db -> fetch_assoc()) and ($counter < $max) ) {
     //Ogni post si ripete la quantitá di volte dei media che ha, visto che ogni post ha piu di un media
 } */
 
-while ($res = $result_db->fetch_assoc()) {
-    $media_types = explode(',', $res['types_media']);
-    $media_paths = explode(',', $res['paths_media']);
-    
-    // Crea un nuovo Post e associa i media
-    $post = new Post($res['id_post'], $res['id_post'], $res['title'], $res['date'], $res['tags'], $res['created_at'], new Media(/*$type*/$media_types, $media_paths)/*$media_objects*/);
-
-    // Aggiungi il post alla lista dei post
-    $posts_db[] = $post;
-    //var_dump($post);
-}
 ?>
